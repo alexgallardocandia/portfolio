@@ -123,57 +123,147 @@
       id="contact"
       class="min-h-screen bg-gray-100 text-gray-900 flex items-center"
     >
-      <div class="container mx-auto px-6">
-        <h2 class="text-4xl font-bold mb-6">Contacto</h2>
-        <p class="text-gray-600 max-w-2xl">
-          Formulario, redes, mail, WhatsApp, lo que quieras.
-        </p>
+      <div class="container mx-auto px-6 max-w-4xl">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+
+          <!-- TEXTO -->
+          <div>
+            <h2 class="text-4xl font-bold mb-4">Contacto</h2>
+            <p class="text-gray-600">
+              ¿Tenés un proyecto en mente o querés trabajar conmigo?
+              Completá el formulario y te respondo a la brevedad.
+            </p>
+          </div>
+
+          <!-- FORMULARIO -->
+          <form @submit.prevent="sendEmail" class="bg-white p-8 rounded-xl shadow-lg space-y-6">
+
+            <div>
+              <label class="block text-sm font-medium mb-1">Nombre</label>
+              <input
+                v-model="form.name"
+                type="text"
+                required
+                class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              />
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium mb-1">Email</label>
+              <input
+                v-model="form.email"
+                type="email"
+                required
+                class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              />
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium mb-1">Mensaje</label>
+              <textarea
+                v-model="form.message"
+                rows="4"
+                required
+                class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              ></textarea>
+            </div>
+
+            <button
+              type="submit"
+              class="w-full bg-indigo-600 text-white py-3 rounded-lg font-semibold hover:bg-indigo-700 transition"
+            >
+              Enviar mensaje
+            </button>
+
+            <p v-if="success" class="text-green-600 text-sm text-center">
+              Mensaje enviado correctamente ✔
+            </p>
+
+            <p v-if="error" class="text-red-600 text-sm text-center">
+              Ocurrió un error, intentá nuevamente ❌
+            </p>
+
+          </form>
+
+        </div>
       </div>
     </section>
 
-  </main>
+</main>
 </template>
-<script>
-export default {
-  name: "HomeView",
-  data() {
-    return {
-      fullTexts: ["Alexander Gallardo", "Analista de Sistemas"],
-      typedText: "",
-      textIndex: 0,
-      charIndex: 0,
-    };
-  },
-  computed:{
-    yearExperience() {
-        const startYear = 2023
-        const currentYear = new Date().getFullYear()
-        return currentYear - startYear
-    }
-  },
-  mounted() {
-    this.typeEffect();
-  },
-  methods: {
-    typeEffect() {
-      if (this.charIndex < this.fullTexts[this.textIndex].length) {
-        this.typedText += this.fullTexts[this.textIndex].charAt(this.charIndex);
-        this.charIndex++;
-        setTimeout(this.typeEffect, 120);
-      } else {
-        setTimeout(this.eraseEffect, 1500);
-      }
-    },
-    eraseEffect() {
-      if (this.charIndex > 0) {
-        this.typedText = this.typedText.slice(0, -1);
-        this.charIndex--;
-        setTimeout(this.eraseEffect, 80);
-      } else {
-        this.textIndex = (this.textIndex + 1) % this.fullTexts.length;
-        setTimeout(this.typeEffect, 500);
-      }
-    },
-  },
-};
+<script setup>
+import { ref, computed, onMounted } from 'vue'
+import emailjs from '@emailjs/browser'
+
+// FORMULARIO
+const form = ref({
+  name: '',
+  email: '',
+  message: ''
+})
+
+const success = ref(false)
+const error = ref(false)
+
+// EMAIL
+const sendEmail = async () => {
+  success.value = false
+  error.value = false
+
+  try {
+    await emailjs.send(
+      'service_3lj4t1k',
+      'template_eolupfg',
+      {
+        from_name: form.value.name,
+        from_email: form.value.email,
+        message: form.value.message,
+      },
+      'sdkv3fXyMqO80KByh'
+    )
+
+    success.value = true
+    form.value = { name: '', email: '', message: '' }
+
+  } catch (e) {
+    error.value = true
+  }
+}
+
+// TEXTO ANIMADO
+const fullTexts = ['Alexander Gallardo', 'Analista de Sistemas']
+const typedText = ref('')
+const textIndex = ref(0)
+const charIndex = ref(0)
+
+const typeEffect = () => {
+  if (charIndex.value < fullTexts[textIndex.value].length) {
+    typedText.value += fullTexts[textIndex.value].charAt(charIndex.value)
+    charIndex.value++
+    setTimeout(typeEffect, 120)
+  } else {
+    setTimeout(eraseEffect, 1500)
+  }
+}
+
+const eraseEffect = () => {
+  if (charIndex.value > 0) {
+    typedText.value = typedText.value.slice(0, -1)
+    charIndex.value--
+    setTimeout(eraseEffect, 80)
+  } else {
+    textIndex.value = (textIndex.value + 1) % fullTexts.length
+    setTimeout(typeEffect, 500)
+  }
+}
+
+// EXPERIENCIA
+const yearExperience = computed(() => {
+  const startYear = 2023
+  return new Date().getFullYear() - startYear
+})
+
+onMounted(() => {
+  typeEffect()
+})
 </script>
