@@ -52,6 +52,122 @@
       </div>
     </section>
 
+    <!-- SOBRE MI / PERFIL -->
+    <section
+      id="about"
+      class="py-24 bg-white text-gray-900"
+    >
+      <div class="container mx-auto px-6">
+        <div class="max-w-3xl mx-auto text-center">
+          <p class="text-indigo-600 uppercase tracking-widest mb-3">
+            Sobre mí
+          </p>
+          <h2 class="text-4xl md:text-5xl font-bold mb-8 leading-tight">
+            Lic. en Análisis de Sistemas Informáticos
+          </h2>
+          <p class="text-gray-500 text-lg leading-relaxed">
+            Profesional en Análisis de Sistemas con experiencia en desarrollo de software,
+            arquitectura de procesos e infraestructura. He participado activamente en el
+            relevamiento de requerimientos con usuarios, análisis de flujos de negocio,
+            definición de funcionalidades y acompañamiento en la implementación de
+            soluciones. Actúo como nexo técnico-funcional entre el área de negocio y el
+            equipo de desarrollo, asegurando soluciones eficientes y alineadas a los
+            objetivos de la organización.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- EXPERIENCIA -->
+    <section
+      id="experience"
+      class="py-24 bg-gray-50 text-gray-900"
+    >
+      <div class="container mx-auto px-6">
+        <p class="text-indigo-600 uppercase tracking-widest mb-3 text-center">
+          Trayectoria
+        </p>
+        <h2 class="text-4xl md:text-5xl font-bold mb-16 text-center leading-tight">
+          Experiencia Laboral
+        </h2>
+
+        <div class="max-w-3xl mx-auto space-y-10 relative border-l-2 border-indigo-200 pl-8">
+
+          <div v-for="job in experience" :key="job.company" class="relative">
+            <span class="absolute -left-[39px] top-1.5 w-4 h-4 rounded-full bg-indigo-600 border-4 border-indigo-100"></span>
+            <p class="text-sm font-semibold text-indigo-600">{{ job.period }}</p>
+            <h3 class="text-xl font-bold mt-1">{{ job.role }}</h3>
+            <p class="text-gray-500 font-medium mb-2">{{ job.company }}</p>
+            <ul class="text-gray-500 text-sm leading-relaxed list-disc list-inside space-y-1">
+              <li v-for="(task, i) in job.tasks" :key="i">{{ task }}</li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- EDUCACION Y HABILIDADES -->
+    <section
+      id="skills"
+      class="py-24 bg-white text-gray-900"
+    >
+      <div class="container mx-auto px-6">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-16">
+
+          <!-- EDUCACION -->
+          <div>
+            <p class="text-indigo-600 uppercase tracking-widest mb-3">Educación</p>
+            <h2 class="text-2xl font-bold mb-6">Formación académica</h2>
+            <div class="space-y-6">
+              <div v-for="edu in education" :key="edu.institution">
+                <p class="text-sm font-semibold text-indigo-600">{{ edu.period }}</p>
+                <h3 class="font-bold">{{ edu.institution }}</h3>
+                <p class="text-gray-500 text-sm">{{ edu.title }}</p>
+              </div>
+            </div>
+
+            <p class="text-indigo-600 uppercase tracking-widest mb-3 mt-10">Idiomas</p>
+            <ul class="text-gray-500 text-sm space-y-1">
+              <li v-for="lang in languages" :key="lang">{{ lang }}</li>
+            </ul>
+          </div>
+
+          <!-- HARD SKILLS -->
+          <div>
+            <p class="text-indigo-600 uppercase tracking-widest mb-3">Hard Skills</p>
+            <h2 class="text-2xl font-bold mb-6">Habilidades técnicas</h2>
+            <div class="flex flex-wrap gap-2">
+              <span
+                v-for="skill in hardSkills"
+                :key="skill"
+                class="bg-indigo-50 text-indigo-700 text-sm font-medium px-4 py-2 rounded-full"
+              >
+                {{ skill }}
+              </span>
+            </div>
+          </div>
+
+          <!-- SOFT SKILLS -->
+          <div>
+            <p class="text-indigo-600 uppercase tracking-widest mb-3">Soft Skills</p>
+            <h2 class="text-2xl font-bold mb-6">Habilidades blandas</h2>
+            <ul class="space-y-3">
+              <li
+                v-for="skill in softSkills"
+                :key="skill"
+                class="flex items-start gap-2 text-gray-500 text-sm"
+              >
+                <span class="w-1.5 h-1.5 mt-2 rounded-full bg-indigo-600 flex-shrink-0"></span>
+                {{ skill }}
+              </li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
     <!-- SERVICIOS -->
     <section
     id="services"
@@ -391,9 +507,82 @@ const whatsappLink = computed(() => {
 
 // EXPERIENCIA
 const yearExperience = computed(() => {
-  const startYear = 2023
+  const startYear = 2019
   return new Date().getFullYear() - startYear
 })
+
+const experience = [
+  {
+    period: '2025 - Actual',
+    role: 'Consultor de Sistemas de TI',
+    company: 'IDESA',
+    tasks: [
+      'Análisis funcional y relevamiento de requerimientos para optimización de procesos internos.',
+      'Diseño de arquitectura lógica e integración de servicios con pasarelas de pago y entidades externas.',
+      'Consultoría técnica y soporte evolutivo sobre sistemas core y bases de datos.'
+    ]
+  },
+  {
+    period: '2024 - 2025',
+    role: 'Desarrollador Web',
+    company: 'BIX S.A.',
+    tasks: [
+      'Desarrollo de APIs para la app, correcciones e implementación de nuevos módulos en el sistema.',
+      'Optimización de crons y procesos automáticos.'
+    ]
+  },
+  {
+    period: '2023 - 2024',
+    role: 'Desarrollador Web',
+    company: 'Grupo EPEM',
+    tasks: [
+      'Relevamiento y seguimiento de tickets, desarrollo de nuevas funcionalidades.',
+      'Capacitación y trabajo en equipo.'
+    ]
+  },
+  {
+    period: '2019 - 2023',
+    role: 'Auxiliar de Infraestructura',
+    company: 'CHACOMER SAE',
+    tasks: [
+      'Servicio técnico al cliente interno, atención, mantenimiento, instalación, diagnóstico y gestión de recursos.'
+    ]
+  }
+]
+
+const education = [
+  {
+    period: '2020 - 2025',
+    institution: 'Universidad Tecnológica Intercontinental',
+    title: 'Licenciatura en Análisis y Diseño de Sistemas Informáticos'
+  },
+  {
+    period: '2015 - 2018',
+    institution: 'Colegio Nacional R. A. Fariña',
+    title: 'Bachillerato Técnico en Informática'
+  }
+]
+
+const languages = [
+  'Español - Nativo',
+  'Inglés - Técnico/Básico (Lectura y documentación)'
+]
+
+const hardSkills = [
+  'Análisis Funcional y BPMN',
+  'Relevamiento de Requerimientos',
+  'Diseño e Integración de APIs REST',
+  'SQL / Bases de Datos Relacionales',
+  'PHP (Laravel / Slim / Symfony)',
+  'Docker & Entornos Linux',
+  'Git & Control de Versiones'
+]
+
+const softSkills = [
+  'Capacidad Analítica y Resolución de Problemas',
+  'Nexo Técnico-Funcional (Negocio/TI)',
+  'Trabajo en Equipo y Adaptabilidad'
+]
 
 onMounted(() => {
   typeEffect()

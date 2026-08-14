@@ -9,9 +9,18 @@
         </div>
 
         <!-- Desktop menu -->
-        <div class="hidden md:flex space-x-8 font-medium">
+        <div class="hidden md:flex space-x-6 font-medium text-sm">
           <button @click="scrollTo('home')" class="hover:text-indigo-600 transition">
             Inicio
+          </button>
+          <button @click="scrollTo('about')" class="hover:text-indigo-600 transition">
+            Perfil
+          </button>
+          <button @click="scrollTo('experience')" class="hover:text-indigo-600 transition">
+            Experiencia
+          </button>
+          <button @click="scrollTo('skills')" class="hover:text-indigo-600 transition">
+            Habilidades
           </button>
           <button @click="scrollTo('services')" class="hover:text-indigo-600 transition">
             Servicios
@@ -50,6 +59,15 @@
     >
       <button @click="mobileScroll('home')" class="block w-full px-6 py-4 text-left hover:bg-gray-100">
         Inicio
+      </button>
+      <button @click="mobileScroll('about')" class="block w-full px-6 py-4 text-left hover:bg-gray-100">
+        Perfil
+      </button>
+      <button @click="mobileScroll('experience')" class="block w-full px-6 py-4 text-left hover:bg-gray-100">
+        Experiencia
+      </button>
+      <button @click="mobileScroll('skills')" class="block w-full px-6 py-4 text-left hover:bg-gray-100">
+        Habilidades
       </button>
       <button @click="mobileScroll('services')" class="block w-full px-6 py-4 text-left hover:bg-gray-100">
         Servicios
